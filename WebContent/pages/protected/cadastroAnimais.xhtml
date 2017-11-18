@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+xmlns:p="http://primefaces.org/ui">
+<h:body>
+<ui:composition template="/pages/protected/template.xhtml">
+<ui:define name="main">
+<h:form id="formAnimais">
+
+<h1 class="titulo-pagina"><h:outputText value="#{bundle.viewCadastroAnimais}"/></h1>
+<br />
+
+<div>
+<p:dataTable var="animal" value="#{cadastroAnimaisMB.animais}">
+	<p:column headerText="#{bundle.lblNomeAnimal}">
+        <h:outputText value="#{animal.nome}" />
+    </p:column>
+    <p:column headerText="#{bundle.lblNomeDonoCadAnimais}">
+        <h:outputText value="#{animal.dono.nome}" />
+    </p:column>
+    <p:column headerText="#{bundle.lblNomeEspecie}">
+        <h:outputText value="#{animal.especie.nome}" />
+    </p:column>
+    <p:column headerText="#{bundle.lblNascimentoAnimalCadAnimais}">
+        <h:outputText value="#{animal.nascimento}" >
+        	<f:convertDateTime pattern="dd/MM/yyyy" />
+        </h:outputText>
+    </p:column>
+    <p:column style="width:110px;text-align: center">
+    <p:commandButton update=":formDialog" oncomplete="PF('dialogExcluirAnimal').show()" icon="ui-icon-trash" title="Excluir" >
+            <f:setPropertyActionListener value="#{animal}" target="#{cadastroAnimaisMB.animalEdicao}"/>
+        </p:commandButton>
+         <p:commandButton update=":formDialog" oncomplete="PF('edicaoAnimal').show()" icon="ui-icon-pencil" title="Editar" >
+            <f:setPropertyActionListener value="#{animal}" target="#{cadastroAnimaisMB.animalEdicao}"/>
+        </p:commandButton>
+    </p:column>
+</p:dataTable>
+</div>
+</h:form>
+
+<h:form id="formDialog">
+<p:dialog header="#{bundle.headerModalAnimais}" widgetVar="edicaoAnimal" modal="true" resizable="false" width="400px">
+    <p:outputPanel id="detalhesAnimal" style="text-align:center;">
+        <h:panelGrid columns="2" width="300px">
+			<h:outputLabel value="#{bundle.lblNomeAnimal}" />
+			<h:inputText value="#{cadastroAnimaisMB.animalEdicao.nome}" label="#{bundle.lblNomeAnimal}" id="nomeAnimal" required="true" />
+			<h:outputLabel value="#{bundle.lblNomeDonoCadAnimais}" />
+			
+			<h:selectOneMenu id="donos" value="#{cadastroAnimaisMB.animalEdicao.dono}" required="true">  
+                <f:selectItems value="#{cadastroAnimaisMB.donosPossiveis}" var="dono" itemLabel="#{dono.nome}" itemValue="#{dono}"/>  
+            </h:selectOneMenu>
+            
+            <h:outputLabel value="#{bundle.lblNascimentoAnimalCadAnimais}" />
+            <p:inputMask id="nascimentoAnimal" mask="99/99/9999" value="#{cadastroAnimaisMB.animalEdicao.nascimento}"
+            							label="#{bundle.lblNascimentoAnimalCadAnimais}" style="width:120px;" required="false">
+            						<f:convertDateTime pattern="dd/MM/yyyy" />
+            </p:inputMask>
+		</h:panelGrid>
+    </p:outputPanel>
+    <br />
+    <p:commandButton value="#{bundle.btnCancelar}" style="float:right; margin-top:30px;" oncomplete="PF('edicaoAnimal').hide();" immediate="true" icon="ui-icon-check"/>
+    <p:commandButton value="#{bundle.btnSalvar}" style="float:right; margin-top:30px;" action="#{cadastroAnimaisMB.salvarAlteracoesAnimal}" 
+    	oncomplete="PF('edicaoAnimal').hide();" icon="ui-icon-check" update=":formAnimais"/>
+</p:dialog>
+
+<p:dialog header="#{bundle.headerModalAviso}" widgetVar="dialogExcluirAnimal" modal="true" resizable="false"> 
+	<p:outputPanel id="dadosRemover">
+		<div style="width: 400px">
+		<h:outputText value="#{bundle.lblConfirmaExclusaoAnimal} #{cadastroAnimaisMB.animalEdicao.nome}?"/>
+	    </div>
+	    <br />
+	    <div style="float: right;">
+		    <p:commandButton value="#{bundle.btnOk}" action="#{cadastroAnimaisMB.excluirAnimal}" 
+		    	oncomplete="PF('dialogExcluirAnimal').hide(); " icon="ui-icon-check" update=":formAnimais"/>
+	        <p:commandButton value="#{bundle.btnCancelar}" oncomplete="PF('dialogExcluirAnimal').hide();"
+	        			icon="ui-icon-cancel" style="margin-left: 5px" immediate="true"/>
+	    </div>
+	</p:outputPanel>
+</p:dialog>
+</h:form>
+
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

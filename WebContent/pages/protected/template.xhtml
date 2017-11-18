@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Sistema de Processamento de Dados CliniVet</title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['images:favicon.ico']}" />
+	<ui:insert name="scripts" />
+	<h:outputStylesheet library="css" name="app.css" />
+	<h:outputStylesheet library="css" name="fontawasome.css" />
+</h:head>  
+<h:body>
+	<div class="container-fluid container-fluid--nopadding  altura--100">
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>    
+		<p:dialog modal="true" widgetVar="statusDialog" header="Aguarde..." resizable="false"
+		        draggable="false" closable="false" showHeader="false" width="200">  
+		 <div style="text-align: center">Carregando...</div> 
+		</p:dialog>  
+  
+		<div class="row no-gutters altura--100">
+ 
+			<div class="col-lg-2 menu-vert altura--100">
+				<h:form>
+					<p:growl id="messagesPrincipal" showDetail="true" autoUpdate="true" closable="true" />
+					<p:panelMenu> 
+						<p:submenu label="#{userMB.funcionario.nome}" styleClass="ui-panelmenu-panel--user ">
+							<p:menuitem value="#{bundle.btnLogout}"
+								action="#{userMB.logOut}" 
+							    />
+						</p:submenu>
+						<p:submenu expanded="true" label="Gerencia" icon="ui-icon-document">  
+							<p:menuitem value="Cadastro de Veterinários" />
+							<p:menuitem value="Cadastro de Outros Funcionários" />
+							<p:menuitem value="Relatórios"
+								action="#{navegacaoMB.getVaiParaRelatorios()}"/>
+						</p:submenu> 
+	
+						<p:submenu label="#{bundle.menuClientes}" icon="ui-icon-document">
+							<p:menuitem value="#{bundle.menuCadastroAnimais}"
+								action="#{navegacaoMB.getVaiParaCadastroAnimais()}"/>
+							<p:menuitem value="#{bundle.menuConsultas}" action="#{navegacaoMB.getVaiParaConsultas()}" />
+						</p:submenu>
+					</p:panelMenu>
+				</h:form> 
+			</div>
+
+			<div class="col-lg-10">
+				<div class="row no-gutters justify-content-md-center" >
+					<div class="col-lg-11" id="main">
+						<ui:insert name="main" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	  
+</h:body>
+</html>

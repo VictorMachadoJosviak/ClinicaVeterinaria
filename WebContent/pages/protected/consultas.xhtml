@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+xmlns:p="http://primefaces.org/ui">
+<h:body>
+<ui:composition template="/pages/protected/template.xhtml">
+<ui:define name="main">
+<h:form id="formConsultas">
+
+<h1 class="titulo-pagina"><h:outputText value="#{bundle.viewConsultas}"/></h1>
+<br />
+
+<div>
+<h:selectOneMenu id="veterinarios" value="#{consultasMB.veterinarioSelecionado}" required="false" >
+	<f:selectItem itemValue="" itemLabel="#{bundle.lblSelecinarUmItem}" />
+    <f:selectItems value="#{consultasMB.veterinarios}" var="vet" itemLabel="#{vet.nome} #{vet.cpf}" itemValue="#{vet}"/>  
+</h:selectOneMenu>
+<p:inputMask id="diaConsultas" mask="99/99/9999" 
+		value="#{consultasMB.diaConsultas}" label="#{bundle.lblDiaConsultasExibidas}" 
+		style="width:120px;margin-left: 30px" required="true">
+			<f:convertDateTime pattern="dd/MM/yyyy" />
+</p:inputMask>
+
+<p:commandButton value="#{bundle.btnOk}" style="margin-left: 5px" update="dadosConsultas"/>    
+<br />
+<br />
+<h:panelGroup id="dadosConsultas">
+<h:panelGroup rendered="#{consultasMB.veterinarioSelecionado != null }" id="grupoConsultas">
+	<h:outputLabel value="Selecionado: #{consultasMB.veterinarioSelecionado.nome}" id="lblVetSelecionado"/>
+</h:panelGroup>
+</h:panelGroup>
+
+</div>
+</h:form>
+
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

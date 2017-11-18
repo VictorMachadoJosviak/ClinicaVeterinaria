@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html" 
+  xmlns:c="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+  >
+  
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
+	<h:outputStylesheet library="css" name="app.css" />
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="row mb-40">
+			<div class="col-sm-12 col-md-12 col-lg-12 text-center">
+				<h:graphicImage library="images" styleClass="login__img" name="logo.jpg"/>
+			</div>
+		</div>
+	
+		<div class="row justify-content-md-center mb-20">
+			<div class="col-sm-12 col-md-4 col-lg-4">
+				<h1 class="login__title">Dashboard</h1>
+			</div>
+		</div>
+	
+		<div class="row justify-content-md-center">
+			<div class="col-sm-12 col-md-4 col-lg-4">
+				<div class="login__form">
+					<h:form>     
+						<p:growl id="messages" showDetail="true" autoUpdate="true" closable="true" />
+						
+						<p:inputText value="#{loginMB.cpf}" 									
+									 id="cpf"
+									 required="true" />
+									 
+						<p:watermark for="cpf" 
+								     value="#{bundle.digiteCPF}"
+									 id="watermark" />
+						
+						<p:inputText type="password" 
+									 value="#{loginMB.senha}"									
+									 id="senha" 
+									 required="true" />
+						<p:watermark for="senha" value="#{bundle.asteristico}" id="watermark2" />
+						<br/>
+						
+						<p:commandButton value="#{bundle.entrar}" type="submit"
+						 action="#{loginMB.login()}" id="btnSubmit" ajax="true"/>
+					</h:form> 
+				</div>
+			</div>
+		</div>
+	</div>
+	</h:body>
+</html>

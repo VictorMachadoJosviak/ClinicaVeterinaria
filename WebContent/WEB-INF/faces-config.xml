@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>pt_BR</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>bundle</var>
+		</resource-bundle>
+		<message-bundle>messages</message-bundle>
+	</application>
+
+	<!-- ManagedBeans -->
+	<managed-bean>
+		<managed-bean-name>loginMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.LoginMB</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>userMB</property-name><!-- injetar o bean userMB na propriedade 
+				userMB do bean loginMB -->
+			<property-class>com.up.clinicaveterinaria.mb.UserMB</property-class>
+			<value>#{userMB}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>userMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.UserMB</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>navegacaoMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.NavegacaoMB</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>cadastroAnimaisMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.CadastroAnimaisMB</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>consultasMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.ConsultasMB</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+		<managed-bean>
+		<managed-bean-name>reportsMB</managed-bean-name>
+		<managed-bean-class>com.up.clinicaveterinaria.mb.ReportsMB</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim ManagedBeans -->
+	
+	<!-- Converters -->
+	 <converter>
+	    <converter-for-class>com.up.clinicaveterinaria.model.Dono</converter-for-class>
+	    <converter-class>com.up.clinicaveterinaria.converter.DonoConverter</converter-class>
+	 </converter>
+	 <converter>
+	    <converter-for-class>com.up.clinicaveterinaria.model.Funcionario</converter-for-class>
+	    <converter-class>com.up.clinicaveterinaria.converter.FuncionarioConverter</converter-class>
+	 </converter>
+	 <!-- Fim Converters -->
+	
+	<!-- Regras de Navegação -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/pages/protected/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cadastroAnimais</from-outcome>
+			<to-view-id>/pages/protected/cadastroAnimais.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>consultas</from-outcome>
+			<to-view-id>/pages/protected/consultas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>relatorios</from-outcome>
+			<to-view-id>/pages/protected/relatorios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		
+	</navigation-rule>
+	<!-- Fim Regras de Navegação -->
+
+
+</faces-config>
